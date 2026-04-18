@@ -1,8 +1,8 @@
 include("Model.jl")
 
 ## Persisters only
-n2 = 0.1*ones(K-pars.α); # Initial normal cells
-n1 = 0.1*zeros(pars.α);# Initial persisters
+n2 = 0.5*ones(K-pars.α); # Initial normal cells
+n1 = zeros(pars.α);# Initial persisters
 U₀=[n1...,n2...,0.1];
 
 
@@ -13,12 +13,14 @@ N_sol = sol[1:K,:];
 R_sol = sol[end,:];
 x =range(0,1,K);
 
-plot(sol.t,sol[end,:],label = "R(t)")
-N_sol = sum(N_sol,dims=1)./K
-plot!(sol.t,N_sol',label="N(t)")
+R_sol = sol[end,:]
+x =range(0,1,K)
+heat = heatmap(1:length(R_sol),range(0,1,K),N_sol,xlabel=L"t",ylabel=L"x")
+savefig("Figures/Uniform_Kernel_heat_persisters.pdf")
+
 ## Normal Cells only
-n2 = 0.1*zeros(K-pars.α) # Initial normal cells
-n1 = 0.1*ones(pars.α)# Initial persisters
+n2 = 1*zeros(K-pars.α) # Initial normal cells
+n1 = 0.5*ones(pars.α)# Initial persisters
 U₀=[n1...,n2...,0.1]
 
 
@@ -67,7 +69,7 @@ savefig("Figures/local_redistribution_heat_persisters.pdf")
 ## How does the equilibrium distribution change as σ changes
 
 
-σ_range = 10.0.^(-5:0.1:0)
+σ_range = 10.0.^(-1.5:0.1:0)
 eq = zeros(K,length(σ_range))
 
 for (l,σ) in enumerate(σ_range)

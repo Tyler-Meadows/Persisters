@@ -1,9 +1,6 @@
 using OrdinaryDiffEq, Parameters
 using Plots, LaTeXStrings
-#using Revise
-using ColorBrewer
-QueensBlue = RGB(0,36/255,82/255)
-QueensGold = RGB(250/255, 189/255, 15/255)
+using Revise
 theme(:wong,
      size = (600,300),
      fontfamily = "computer modern",
@@ -15,14 +12,14 @@ theme(:wong,
      )
 
 ## Parameters and model setup
-K = 200
+K = 100
 pars = (θ = 1.0,
         η = 0.3,
-        d = 0.01, 
+        d = 0.03, 
         b = 0.6,
-        v = 0.1,
+        v = 1.0,
         μ = 0.4,
-        α = 20,
+        α = 80,
         λ = 60,
         m = 1e-2
         )
@@ -44,11 +41,22 @@ M[1,2] = M[end,end-1] *= 2
 
 ## First choice of p
 # p(x,y) = 1
-P = zeros(K,K)
+P1 = zeros(K,K)
 for i in 1:pars.α
-    P[:,i] .= 1.0
+    P1[:,i] .= 1.0
 end
-P = P./sum(P,dims=2)/K # Normalize sum over Y
+P1 = P1./sum(P1,dims=2)/K # Normalize sum over Y
+
+## Second choice of p
+# p(x,y) = exp(-(x-y)^2/σ^2)
+P2 = zeros(K,K)
+for i in 1:K
+    for j in 1:pars.α
+        P2[i,j] = exp(-(i-j)^2/0.3^2)
+    end
+end
+P2 = P2./ sum(P2, dims = 2)/K
+
 
 v(x) = (x-1)*(pars.λ-x)*(K-x)/K^3 # Advection
 V = zeros(K,K)
@@ -60,7 +68,7 @@ for i in 1:K
     end
     V[i,i] = -sum(V[:,i])
 end
-pars = merge(pars,(p = P,))
+pars = merge(pars,(p = P1,))
 
 function persisters!(du,u,pars,t)
     @unpack θ,η,d,b,α,μ,v,p,m = pars
@@ -74,6 +82,6 @@ function persisters!(du,u,pars,t)
     du[1:K] .= (m*M+v*V)*N +(b*R*(1.0-μ))*χ*N - d*χ*N + (μ*R*b).*P*N
 end
 
-tspan = (0.0,400.0)
+tspan = (0.0,100.0)
 
 
