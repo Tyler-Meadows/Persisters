@@ -20,7 +20,7 @@ pars = (θ = 1.0,
         v = 1.0,
         μ = 0.4,
         α = 80,
-        λ = 60,
+        γ = 60,
         m = 1e-2
         )
 
@@ -58,7 +58,7 @@ end
 P2 = P2./ sum(P2, dims = 2)/K
 
 
-v(x) = (x-1)*(pars.λ-x)*(K-x)/K^3 # Advection
+v(x) = (x-1)*(pars.γ-x)*(K-x)/K^3 # Advection
 V = zeros(K,K)
 for i in 1:K
     for j in 1:K
