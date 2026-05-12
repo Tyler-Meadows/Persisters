@@ -1,7 +1,7 @@
 include("Model.jl")
 
 ## Persisters only
-n2 = 0.5*ones(K-pars.α); # Initial normal cells
+n2 = 40*ones(K-pars.α); # Initial normal cells
 n1 = zeros(pars.α);# Initial persisters
 U₀=[n1...,n2...,0.1];
 
@@ -19,8 +19,8 @@ heat = heatmap(1:length(R_sol),range(0,1,K),N_sol,xlabel=L"t",ylabel=L"x")
 savefig("Figures/Uniform_redistribution_heat_persisters.pdf")
 
 ## Normal Cells only
-n2 = 1*zeros(K-pars.α) # Initial normal cells
-n1 = 0.5*ones(pars.α)# Initial persisters
+n2 = 0.5*zeros(K-pars.α) # Initial normal cells
+n1 = 40*ones(pars.α)# Initial persisters
 U₀=[n1...,n2...,0.1]
 
 

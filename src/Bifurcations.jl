@@ -1,7 +1,7 @@
 include("Model.jl")
 
 
-U₀=[ones(K)...,1.0];
+U₀=[40*ones(K)...,1.0];
 pars = (pars...,α = 20)
 tspan = (0.0,10000.0)
 prob = ODEProblem(persisters!,U₀,tspan,pars);
