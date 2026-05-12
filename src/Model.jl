@@ -78,8 +78,8 @@ function persisters!(du,u,pars,t)
     for i in 1:α
         χ[i,i] = 1.0
     end
-    du[end] = θ - η*R - sum(b*R*N[1:α])
-    du[1:K] .= (m*M+v*V)*N +(b*R*(1.0-μ))*χ*N - d*χ*N + (μ*R*b).*P*N
+    du[end] = θ - η*R - sum(b*R*N[1:α])/K
+    du[1:K] .= (m*M+v*V)*N +(b*R*(1.0-μ))*χ*N - d*χ*N + (μ*R*b).*p*N
 end
 
 tspan = (0.0,100.0)

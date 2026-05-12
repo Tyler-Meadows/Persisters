@@ -16,7 +16,7 @@ x =range(0,1,K);
 R_sol = sol[end,:]
 x =range(0,1,K)
 heat = heatmap(1:length(R_sol),range(0,1,K),N_sol,xlabel=L"t",ylabel=L"x")
-savefig("Figures/Uniform_Kernel_heat_persisters.pdf")
+savefig("Figures/Uniform_redistribution_heat_persisters.pdf")
 
 ## Normal Cells only
 n2 = 1*zeros(K-pars.α) # Initial normal cells
@@ -32,9 +32,6 @@ R_sol = sol[end,:]
 x =range(0,1,K)
 heat = heatmap(1:length(R_sol),range(0,1,K),N_sol,xlabel=L"t",ylabel=L"x")
 savefig("Figures/Uniform_redistribution_heat_normal.pdf")
-init = plot(x,N_sol[:,1],color=QueensBlue,label=L"n(x,0)")
-plot!(x,N_sol[:,end], color = QueensGold,label=L"n(x,T)",xlabel = L"x")
-savefig("Figures/Uniform_redistribution_normal.pdf")
 
 
 
@@ -58,8 +55,6 @@ N_sol = sol[1:K,:]
 R_sol = sol[end,:]
 x =range(0,1,K)
 heat = heatmap(1:length(R_sol),range(0,1,K),N_sol,xlabel=L"t",ylabel=L"x",labelfontsize=6)
-init = plot(x,N_sol[:,1],color=QueensBlue,label=L"n(x,0)",legendfontsize=5)
-plot!(x,N_sol[:,end], color = QueensGold,label=L"n(x,T)",xlabel = L"x", labelfontsize=6)
 savefig("Figures/local_redistribution_persisters.pdf")
 heat
 savefig("Figures/local_redistribution_heat_persisters.pdf")
